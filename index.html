@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Bookstore – Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* NAWIGACJA */
+        nav {
+            background-color: #333;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 12px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .login-status {
+            font-size: 0.9rem;
+        }
+
+        .auth-btn {
+            background-color: #667eea;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .auth-btn:hover {
+            background-color: #764ba2;
+        }
+
+        /* GŁÓWNA ZAWARTOŚĆ */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        main {
+            flex: 1;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        h2 {
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
+            width: 100%;          /* ⬅️ KLUCZ */
+            max-width: 1200px;    /* ⬅️ JAK STRONA */
+            margin: 0 auto;       /* ⬅️ WYŚRODKOWANIE */
+        }
+
+
+        .book-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .book-img {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+        border-radius: 6px;
+        margin-bottom: 12px;
+        }
+
+        .book-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 6px;
+            color: #333;
+        }
+
+        .book-author {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .book-price {
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: #667eea;
+            margin-bottom: 12px;
+        }
+
+        .book-actions {
+            display: flex;
+            gap: 8px;
+            flex-direction: column;
+        }
+        .book-genre {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #764ba2;
+        }
+
+        .btn-secondary {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+
+        #msg {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 6px;
+            background-color: white;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* STOPKA */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+        /*kategorie*/
+        .categories {
+        margin-bottom: 30px;
+        position: sticky;
+        top: 0;
+        background: white;
+        z-index: 10;
+        padding: 10px 0;
+        width: 100%;
+
+        }
+
+        .categories-title {
+        font-weight: bold;
+        margin-bottom: 10px;
+        }
+
+.categories-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 3px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 16px;   /* ⬅️ kontrolowane odsunięcie */
+  padding-right: 16px;
+}
+                       
+
+.categories-list li {
+  padding: 8px 14px;
+  cursor: pointer;
+  color: #000;
+  white-space: nowrap;
+  border: 1px solid #ddd;
+  border-radius: 6px;        /* ⬅️ prostokąty */
+  background: #fff;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+
+
+.categories-list li:hover {
+  background: #fff3e8;
+  border-color: #ff6a00;
+  color: #ff6a00;
+}
+
+.categories-list li.active {
+  background: #070f5b;
+  border-color: #050f64;
+  color: #fff;
+  font-weight: 500;
+}
+.category-section {
+  margin: 30px auto;
+  max-width: 1200px;
+}
+
+.hidden {
+  display: none;
+}
+        
+    </style>
+</head>
+<body>
+
+<!-- GÓRNE MENU NAWIGACYJNE -->
+<nav>
+    <div class="nav-left">
+        <a href="index.html"><strong>Store</strong></a>
+        <a href="about.html">About us</a>
+        <a href="game.html">Play & Earn Points</a>
+    </div>
+    <div class="nav-right">
+        <a href="cart.html">🛒 Cart</a>
+        <a href="favorites.html">♥ Favourites</a>
+        <span id="login-status" class="login-status"></span>
+        <span id="auth-btn" class="auth-btn"></span>
+    </div>
+</nav>
+
+<header>
+    <h1>Bookland</h1>
+    <p>Discover amazing books and earn loyalty points!</p>
+</header>
+
+<nav class="categories">
+  <ul class="categories-list">
+    <li data-category="All" class="active">All</li>
+    <li data-category="Biography">Biography</li>
+    <li data-category="Programming">Programming</li>
+    <li data-category="Economy">Economy</li>
+    <li data-category="Fantasy">Fantasy</li>
+    <li data-category="Science Fiction">Science Fiction</li>
+    <li data-category="Detective">Detective</li>
+    <li data-category="Drama">Drama</li>
+    <li data-category="Classic Polish literature">Classic Polish literature</li>
+    <li data-category="Dystopian novel">Dystopian novel</li>
+    <li data-category="Essay">Essay</li>
+    <li data-category="For Kids">For Kids</li>
+  </ul>
+</nav>
+
+<main>
+    
+
+    <div id="books-container" class="books-grid"></div>
+
+    <section id="categorySection" class="category-section hidden">
+    <h2 id="categoryTitle"></h2>
+    <div id="categoryBooks" class="books-grid"></div>
+    </section>
+    <h2>Explore our books</h2>
+    <div id="books" class="books-grid"></div>
+
+    <p id="msg"></p>
+</main>
+
+
+
+
+
+<footer>
+    <p>&copy; 2025 Online Bookstore. All rights reserved. | <a href="index.html">Home</a> | <a href="about.html">About</a></p>
+</footer>
+
+<script src="js/userData.js"></script>
+<script>
+    // inicjalizacja
+    initBooksIfNeeded();
+
+    // elementy
+    const booksContainer = document.getElementById("books-container");
+    const msg = document.getElementById("msg");
+    const loginStatus = document.getElementById("login-status");
+    const authBtn = document.getElementById("auth-btn");
+
+    // funkcja do aktualizacji info logowania w nawigacji
+    function updateAuthStatus() {
+        const user = getCurrentUser();
+        if (user) {
+            loginStatus.textContent = "Logged in as: " + user.username;
+            authBtn.textContent = "Logout";
+            authBtn.onclick = function () {
+                logoutUser();
+                location.reload();
+            };
+        } else {
+            loginStatus.textContent = "";
+            authBtn.textContent = "Login";
+            authBtn.onclick = function () {
+                window.location.href = "login.html";
+            };
+        }
+    }
+
+    // renderowanie książek
+    function renderBooks() {
+        booksContainer.innerHTML = "";
+        const books = loadBooks();
+
+        books.forEach(function (book) {
+            const card = document.createElement("div");
+            card.className = "book-card";
+
+            const imageEl = document.createElement("div");
+            imageEl.className = "book-image";
+            const img = document.createElement("img");
+            img.src = book.image;
+            img.alt = book.title;
+            img.className = "book-img";
+            imageEl.appendChild(img);
+
+            const titleEl = document.createElement("div");
+            titleEl.className = "book-title";
+            titleEl.textContent = book.title;
+
+            const authorEl = document.createElement("div");
+            authorEl.className = "book-author";
+            authorEl.textContent = "by " + book.author;
+            //wyświetlenie gatunków
+            const genreEl = document.createElement("div");
+            genreEl.className = "book-genre";
+            genreEl.textContent = book.genre;
+            //
+            const priceEl = document.createElement("div");
+            priceEl.className = "book-price";
+            priceEl.textContent = book.price.toFixed(2) + " PLN";
+
+            const actionsEl = document.createElement("div");
+            actionsEl.className = "book-actions";
+
+            const addToCartBtn = document.createElement("button");
+            addToCartBtn.className = "btn-primary";
+            addToCartBtn.textContent = "Add to cart";
+            addToCartBtn.onclick = function () {
+                if (!isUserLoggedIn()) {
+                    msg.style.color = "red";
+                    msg.textContent = "Please log in to add books to your cart.";
+                    return;
+                }
+                try {
+                    addToCart(book.id);
+                    msg.style.color = "green";
+                    msg.textContent = "✓ Added \"" + book.title + "\" to your cart.";
+                } catch (err) {
+                    msg.style.color = "red";
+                    msg.textContent = err.message;
+                }
+            };
+
+            const addToFavBtn = document.createElement("button");
+            addToFavBtn.className = "btn-secondary";
+            addToFavBtn.textContent = "♥ Add to favourites";
+            addToFavBtn.onclick = function () {
+                if (!isUserLoggedIn()) {
+                    msg.style.color = "red";
+                    msg.textContent = "Please log in to add books to favourites.";
+                    return;
+                }
+                try {
+                    addToFavorites(book.id);
+                    msg.style.color = "green";
+                    msg.textContent = "✓ Added \"" + book.title + "\" to your favourites.";
+                } catch (err) {
+                    msg.style.color = "red";
+                    msg.textContent = err.message;
+                }
+            };
+
+            actionsEl.appendChild(addToCartBtn);
+            actionsEl.appendChild(addToFavBtn);
+
+            card.appendChild(imageEl);
+            card.appendChild(titleEl);
+            card.appendChild(authorEl);
+            card.appendChild(genreEl);
+            card.appendChild(priceEl);
+            card.appendChild(actionsEl);
+
+            booksContainer.appendChild(card);
+        });
+    }
+
+    // inicjalizacja strony
+    updateAuthStatus();
+    renderBooks();
+</script>
+</body>
+</html>
