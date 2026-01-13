@@ -552,7 +552,7 @@ function renderBooks(books, container = booksContainer) {
       try {
         addToCart(book.id);
         msg.style.color = "green";
-        msg.textContent = `✓ Added "${book.title}" to your cart.`;
+        msg.textContent = ✓ Added "${book.title}" to your cart.;
       } catch (err) {
         msg.style.color = "red";
         msg.textContent = err.message;
@@ -571,7 +571,7 @@ function renderBooks(books, container = booksContainer) {
       try {
         addToFavorites(book.id);
         msg.style.color = "green";
-        msg.textContent = `✓ Added "${book.title}" to your favourites.`;
+        msg.textContent = ✓ Added "${book.title}" to your favourites.;
       } catch (err) {
         msg.style.color = "red";
         msg.textContent = err.message;
@@ -590,6 +590,7 @@ function renderBooks(books, container = booksContainer) {
 
     container.appendChild(card);
   });
+
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -631,5 +632,27 @@ document.addEventListener("DOMContentLoaded", () => {
       renderBooks(books, categoryBooksContainer);
     });
   });
+  
 });
 
+
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("input", () => {
+  const value = searchInput.value.toLowerCase();
+
+  const allBooks = loadBooks();
+
+  const filteredBooks = allBooks.filter(book =>
+    book.title.toLowerCase().includes(value) ||
+    book.author.toLowerCase().includes(value) ||
+    book.genre.toLowerCase().includes(value)
+  );
+
+  // chowamy sekcję kategorii przy wyszukiwaniu
+  document.getElementById("categorySection").classList.add("hidden");
+
+  renderBooks(filteredBooks);
+
+
+});
